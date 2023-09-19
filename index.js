@@ -62,20 +62,16 @@ function flipCard() {
   checkForMatch();
 }
 
-function checkForMatch() {
+checkForMatch = () => {
   let isMatch = firstCard.dataset.name === secondCard.dataset.name;
 
-  isMatch ? disableCards() : unflipCards();
+  if(!isMatch) 
+    unflipCards().then(resetBoard());
+  else
+    resetBoard();
 }
 
-function disableCards() {
-  firstCard.removeEventListener("click", flipCard);
-  secondCard.removeEventListener("click", flipCard);
-
-  resetBoard();
-}
-
-function unflipCards() {
+unflipCards = () => {
   setTimeout(() => {
     firstCard.classList.remove("flipped");
     secondCard.classList.remove("flipped");
@@ -83,13 +79,13 @@ function unflipCards() {
   }, 1000);
 }
 
-function resetBoard() {
+resetBoard = () => {
   firstCard = null;
   secondCard = null;
   lockBoard = false;
 }
 
-function restart() {
+restart = ()  => {
   resetBoard();
   shuffleCards();
   score = 0;
